@@ -1,8 +1,20 @@
 const Replicator = require('./lib/Replicator');
+const readline = require('readline');
+const log = console.log;
 
-const data = {
-    name: "Christian",
-    ttl: 70
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const recursiveAsyncReadLine = function () {
+    rl.question('Message: ', (message) => {
+        replicator.send({
+            message
+        });
+
+        recursiveAsyncReadLine();
+    });
 };
 
 const followerData = [
@@ -17,5 +29,3 @@ const replicator = new Replicator;
 followerData.forEach((data) => {
     replicator.addFollower(data);
 });
-
-replicator.sendToFollowers(data);
